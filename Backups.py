@@ -2,7 +2,7 @@ from glob import glob
 from os.path import exists, expanduser, join
 from sys import exit
 
-from modules import backupData, getInput, restoreData
+from modules import backupData, restoreData, getInput, areYouSure
 
 
 def main():
@@ -20,10 +20,12 @@ def main():
 
     def backup():
         print("\nBacking up data...")
+        areYouSure()
         backupData(backupSrc, backupDest)
 
     def restore():
         print("\nRestoring data...")
+        areYouSure()
         restoreSrc, restoreDest = backupDest, backupSrc
         restoreData(restoreSrc, restoreDest)
 

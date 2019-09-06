@@ -12,24 +12,27 @@ def transformPaths(src, dest):
     ]
 
 
+def mkdirNotExists(dirToMake):
+    if not exists(dirToMake):
+        mkdir(dirToMake)
+
+
 def checkTargets(targets):
     if isinstance(targets, list):
-        for dir in targets:
-            targetDir = dirname(dir)
-            if not exists(targetDir):
-                mkdir(targetDir)
+        for dirs in targets:
+            targetDir = dirname(dirs)
+            mkdirNotExists(targetDir)
     else:
-        if not exists(targets):
-            mkdir(targets)
+        mkdirNotExists(targets)
 
 
 def backupData(src, dest):
     checkTargets(dest)
     getDest, checksums = transformPaths(src, dest)
     checkTargets(getDest)
-    copyData(src, getDest)
     with open(join(dest, "checksum-mappings.log"), "a") as f:
         f.write(f"{str(checksums)}\n\n")
+    copyData(src, getDest)
 
 
 def restoreData(src, dest):
