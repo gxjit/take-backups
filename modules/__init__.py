@@ -1,3 +1,3 @@
-from .Input import getInput, areYouSure
+from .Helpers import flatMap, joinHomeTo
+from .Input import areYouSure, getInput
 from .Paths import backupData, restoreData
-from .Helpers import flatMap
