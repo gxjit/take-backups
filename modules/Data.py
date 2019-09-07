@@ -4,11 +4,13 @@ from shutil import copy
 from zlib import adler32
 
 
+def computeChecksums(datum):
+    return adler32(datum.encode("utf8")) & 0xFFFFFFFF
+
+
 def getChecksums(paths):
-    uniquePaths = set([dirname(path) for path in paths])
-    checksums = {
-        path: (adler32(path.encode("utf8")) & 0xFFFFFFFF) for path in uniquePaths
-    }
+    uniquePaths = set(map(dirname, paths))
+    checksums = {path: computeChecksums(path) for path in uniquePaths}
     return checksums
 
 

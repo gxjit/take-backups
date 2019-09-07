@@ -1,22 +1,14 @@
 from glob import glob
-from os.path import exists, expanduser, join
 from sys import exit
 
-from modules import backupData, restoreData, getInput, areYouSure
+from config import relativeDest, relativeSrc
+from modules import areYouSure, backupData, flatMap, getInput, joinHomeTo, restoreData
 
 
 def main():
-    relativeSrc = [
-        ".config/sublime-text-3/Packages/User/*.sublime-build",
-        ".config/sublime-text-3/Packages/User/*.sublime-settings",
-        ".config/sublime-text-3/Packages/User/*.sublime-keymap",
-        "Configs/.*",
-    ]
-    relativeDest = "Backups"  # src and dest are both relative to user home "~"
-    backupDest = join(expanduser("~"), relativeDest)
-    backupSrc = [
-        file for path in relativeSrc for file in glob(join(expanduser("~"), path))
-    ]
+    fullDestPaths = map(joinHomeTo, relativeSrc)
+    backupSrc = flatMap(glob, fullDestPaths)
+    backupDest = joinHomeTo(relativeDest)
 
     def backup():
         print("\nBacking up data...")

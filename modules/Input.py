@@ -1,5 +1,6 @@
 from sys import exit
 
+
 def getInput(callbacks):
     try:
         choice = int(input("\n> "))
@@ -30,6 +31,3 @@ def areYouSure():
         return
     else:
         exit()
-
-
-
