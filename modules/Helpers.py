@@ -1,5 +1,5 @@
-from glob import glob
 from functools import partial
+from glob import glob
 from itertools import chain
 from os.path import expanduser, join
 

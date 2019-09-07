@@ -16,7 +16,7 @@ def transformPaths(src, dest):
 def transformDestPaths(globbedSrc, checksums):
     checksumsLookup = {value: key for key, value in checksums.items()}
     return [
-        join(str(checksumsLookup[int(basename(dirname(path)))]), basename(path))
+        join(checksumsLookup[int(basename(dirname(path)))], basename(path))
         for path in globbedSrc
     ]
 
@@ -42,14 +42,13 @@ def backupData(src, dest):
     checkTargets(nwDest)
     with open(join(dest, "checksum-mappings.log"), "a") as f:
         f.write("\n----\n" f"{str(src)}" "\n-\n" f"{str(checksums)}" "\n----\n")
-    print(globbedSrc, "\n\n", nwDest)
-    # copyData(globbedSrc, nwDest)
+    # print(globbedSrc, "\n\n", nwDest)
+    copyData(globbedSrc, nwDest)
 
 
 def restoreData(src, dest):
     nwSrc, checksums = transformPaths(dest, src)
     globbedSrc = globPaths(nwSrc)
-    globbedDest = transformDestPaths(globbedSrc, checksums)
-    print(globbedSrc, "\n\n", globbedDest)
-    print(len(globbedSrc), "\n\n", len(globbedDest))
-    # copyData(nwSrc, dest)
+    originDest = transformDestPaths(globbedSrc, checksums)
+    # print(globbedSrc, "\n\n", originDest)
+    copyData(globbedSrc, originDest)
