@@ -1,13 +1,11 @@
-from glob import glob
 from sys import exit
 
 from config import relativeDest, relativeSrc
-from modules import areYouSure, backupData, flatMap, getInput, joinHomeTo, restoreData
+from modules import areYouSure, backupData, getInput, joinHomeTo, restoreData
 
 
 def main():
-    fullDestPaths = map(joinHomeTo, relativeSrc)
-    backupSrc = flatMap(glob, fullDestPaths)
+    backupSrc = list(map(joinHomeTo, relativeSrc))
     backupDest = joinHomeTo(relativeDest)
 
     def backup():

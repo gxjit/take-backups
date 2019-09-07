@@ -10,13 +10,11 @@ def computeChecksums(datum):
 
 def getChecksums(paths):
     uniquePaths = set(map(dirname, paths))
-    print("\n",uniquePaths)
     checksums = {path: computeChecksums(path) for path in uniquePaths}
     return checksums
 
 
 def copyData(src, dest):
-    print(src, dest)
     for i, file in enumerate(src):
         if exists(file):
             if exists(dest[i]):
